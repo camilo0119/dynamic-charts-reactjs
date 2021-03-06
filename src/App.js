@@ -1,9 +1,13 @@
-import { Statistics } from "./views/Statistics";
+import StatisticsByCriteria from "./views/StatisticsByCriteria";
+import {UserProvider, useUsuario}  from './context/ususario-context';
 
 function App() {
+
   return (
     <div className="container">
-      <Statistics/>
+      <UserProvider>
+        <StatisticsByCriteria/>
+      </UserProvider>
     </div>
   );
 }

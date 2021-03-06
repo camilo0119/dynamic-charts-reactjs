@@ -1,39 +1,45 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {Doughnut} from '@reactchartjs/react-chart.js'
 
-export const Charts = ({data}) => {
+export const Charts = ({data, colorList}) => {
 
+
+    console.log('colorList', colorList)
     const chartConfigInitial = {
-        labels: data.map(p => p.labels),
+        // labels: data.map(p => p.labels),
         datasets: [
             {
                 data: data.map(p => p.data),
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                  ],
-                  borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                  ],
-                  borderWidth: 1,
+                backgroundColor: colorList.backgroundColor,
+                borderColor: colorList.borderColor,
+                borderWidth: 1,
             }
         ]
     }
+
+    const option = {
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              var dataset = data.datasets[tooltipItem.datasetIndex];
+              var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+              var total = meta.total;
+              var currentValue = dataset.data[tooltipItem.index];
+              var percentage = parseFloat((currentValue/total*100).toFixed(1));
+              return currentValue + ' (' + percentage + '%)';
+            },
+            title: function(tooltipItem, data) {
+              return data.labels[tooltipItem[0].index];
+            }
+          }
+        }
+      }
 
     const [chartConfigData, setChartConfigData] = useState(chartConfigInitial)
 
     return (
         <div>
-            <Doughnut data={chartConfigData}/>
+            <Doughnut data={chartConfigData} options={option}/>
         </div>
     )
 }

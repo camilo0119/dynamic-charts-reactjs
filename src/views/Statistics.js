@@ -1,64 +1,76 @@
 import React, {useEffect, useState} from 'react'
+import getRandomColor from '../commons/getRandomColor'
 import { Charts } from '../components/Charts'
 import { TableInfoChart } from '../components/TableInfoChart'
 
-export const Statistics = () => {
+var colorList = []
 
-    const chartDataMock = [
-        {
-            title: 'Estadísticas Candidatos por sexo',
-            headTitles: ['Candiatos por Género', 'Sexo'],
-            values: [
-                {labels: 'No Realizado', data: 1000},
-                {labels: 'Realizado', data: 50},
-            ]
-        },
-        {
-            title: 'Cualquier titulo',
-            headTitles: ['Votos por Hombres', ''],
-            values: [
-                {labels: 'Votaron', data: 250},
-                {labels: 'No votaron', data: 48},
-            ]
-        },
-        {
-            title: 'Lo que sea',
-            headTitles: ['Votos por Mujeres', 'Sexo'],
-            values: [
-                {labels: 'Votaron', data: 10},
-                {labels: 'No votaron', data: 75},
-                {labels: 'NA', data: 10},
-            ]
-        },
-    ]
+export const Statistics = ({chartData}) => {
 
-    const [chartsData, setChartsData] = useState(chartDataMock)
+    const [chartsData, setChartsData] = useState([])
+    const [chartSelected, setChartSelected] = useState('')
+    const [updateChild, setUpdateChild] = useState(0)
 
     useEffect(() => {
-        getApi()
-    }, [])
+        setChartsData(chartData)
+    }, [chartData])
 
-    const getApi = () => {
-        console.log('Consumir api y armar estructura JSON')
+    useEffect(() => {
+        filterChart()
+        setUpdateChild(old => old + 1)
+    }, [chartSelected])
+
+    const getColorForChart = (idx) => {
+        const colors = getRandomColor(chartData)
+        colorList[idx] = colors
+        return colors
+    }
+
+    const filterChart = async () => {
+        if (!chartSelected) {
+            await setChartsData(chartData)
+        } else {
+            let newChartList = chartData.filter(item => item.title === chartSelected)
+            await setChartsData(newChartList)
+        }
     }
  
     return (
         <div>
-            <div className="columns is-multiline is-glapsess">
+            <div className="columns">
+                <div className="column">
+                    <div className="field">
+                        <div className="columns">
+                            <div className="column is-flex">
+                                <label className="label is-small" style={{paddingRight: 10}}>Filtrar gráfico por: </label>
+                                <select value={chartSelected} onChange={(e) => setChartSelected(e.target.value)}>
+                                    <option value='' selected>Todos</option>
+                                    {
+                                        chartData.map((item, i) => (
+                                            <option key={i} value={item.title}>{item.title}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="columns is-multiline">
                 {
-                    chartsData.map(chart => (
-                        <div className="column is-6">
-                            <header className="card-header">
-                                {chart.title}
-                            </header>
-                            <div className="card-content">
-                                <div className="columns content">
-                                    <div className="column">
-                                        <Charts data={chart.values}/>
-                                    </div>
-                                    <div className="column">
-                                        <TableInfoChart data={chart}/>
-                                    </div>
+                    chartsData.map((chart, i) => (
+                        <div className="column is-5 card-chart" key={i}>
+                            <p className="is-uppercase card-chart-title">{chart.title}</p>
+                            <hr/>
+                            <div className="columns">
+                                <div className="column is-7">
+                                    <Charts key={updateChild} data={chart.values} colorList={getColorForChart(i)}/>
+                                </div>
+                                <div className="column" style={{marginTop: 10}}>
+                                    {
+                                        colorList[i] &&
+                                        <TableInfoChart key={updateChild} data={chart} colorList={colorList[i]}/>
+                                    }
                                 </div>
                             </div>
                         </div>
