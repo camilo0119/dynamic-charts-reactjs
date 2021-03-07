@@ -3,8 +3,6 @@ import {Doughnut} from '@reactchartjs/react-chart.js'
 
 export const Charts = ({data, colorList}) => {
 
-
-    console.log('colorList', colorList)
     const chartConfigInitial = {
         // labels: data.map(p => p.labels),
         datasets: [

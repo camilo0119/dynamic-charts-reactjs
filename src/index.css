@@ -38,3 +38,9 @@ hr {
 	border-radius: 100%;
   margin: 4px;
 }
+
+.ellipsis-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

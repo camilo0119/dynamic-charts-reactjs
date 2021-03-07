@@ -20,7 +20,7 @@ const getColor = () => {
     const g = Math.floor(Math.random() * 255);
     const b = Math.floor(Math.random() * 255);
     return {
-        backgroundColor: 'rgb(' + r + ',' + g + ',' + b + ',0.5)',
+        backgroundColor: 'rgb(' + r + ',' + g + ',' + b + ',0.8)',
         borderColor: 'rgb(' + r + ',' + g + ',' + b + ',1)'
     }
 }

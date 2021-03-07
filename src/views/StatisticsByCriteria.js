@@ -16,7 +16,9 @@ const StatisticsByCriteria = (props) => {
     useEffect(() => {
         if (!!resultsPolls?.populationCountDTO) {
             getPopulation()
-            getElctoralProcess()
+            getElctoralProcessGenderCensus()
+            getElectoralResultGenderCount()
+            getElectoralResultCount()
         }
     }, [resultsPolls])
 
@@ -33,10 +35,10 @@ const StatisticsByCriteria = (props) => {
 
     const getPopulation = () => {
         const dataPopulation = {
-            title: 'Reporte de Abstinecia',
+            title: 'Reporte de Participación',
             headTitles: ['Tipo', 'Cantidad'],
             values: [
-                {labels: 'Sufragantes', data: resultsPolls?.populationCountDTO?.votes},
+                {labels: 'Participación', data: resultsPolls?.populationCountDTO?.votes},
                 {labels: 'Abstención', data: resultsPolls?.populationCountDTO?.population},
             ]
         }
@@ -46,14 +48,55 @@ const StatisticsByCriteria = (props) => {
         ]))
     }
 
-    const getElctoralProcess = () => {
+    const getElctoralProcessGenderCensus = () => {
+        let headTitles = [] 
+        let values = []
+        if (resultsPolls?.electoralProcessGenderCensus.length > 0) {
+            resultsPolls?.electoralProcessGenderCensus.forEach(p => {
+                values.push({labels: `Participación ${p.gender.toUpperCase() === 'MASCULINO' ? 'Hombres' : 'Mujeres'}`, data: p.voteCount})   
+                values.push({labels: `Abstención ${p.gender.toUpperCase() === 'MASCULINO' ? 'Hombres' : 'Mujeres'}`, data: p.noVote})
+            })
+        }
         const dataPopulation = {
-            title: 'Reporte de Abstinecia por Sexo',
-            headTitles: ['Hombres', 'Mujeres'],
-            values: [
-                {labels: 'Hombres', data: resultsPolls?.populationCountDTO?.votes + 15},
-                {labels: 'Mujeres', data: resultsPolls?.populationCountDTO?.population + 3},
-            ]
+            title: 'Abstinecia por Género',
+            headTitles: ['Género', 'Total'],
+            values
+        }
+        setChartData(old => ([
+            ...old,
+            dataPopulation
+        ]))
+    }
+
+    const getElectoralResultGenderCount = () => {
+        let values = []
+        if (resultsPolls?.electoralResultGenderCount.length > 0) {
+            resultsPolls?.electoralResultGenderCount.forEach(p => {
+                values.push({labels: `${p?.gender?.toUpperCase() === 'MASCULINO' ? 'Hombres' : 'Mujeres'}`, data: p.count})
+            })
+        }
+        const dataPopulation = {
+            title: 'Participación por Género',
+            headTitles: ['Género', 'Total'],
+            values
+        }
+        setChartData(old => ([
+            ...old,
+            dataPopulation
+        ]))
+    }
+
+    const getElectoralResultCount = () => {
+        let values = []
+        if (resultsPolls?.electoralResultCount.length > 0) {
+            resultsPolls?.electoralResultCount.forEach(p => {
+                values.push({labels: p.candidate, data: p.count})
+            })
+        }
+        const dataPopulation = {
+            title: 'Resultado de Votación',
+            headTitles: ['Candidato', 'Total Votos'],
+            values
         }
         setChartData(old => ([
             ...old,
