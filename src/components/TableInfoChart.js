@@ -53,7 +53,7 @@ export const TableInfoChart = ({data, colorList}) => {
                     </div>
                     <div className="column is-4">
                         <p style={{textAlign: 'center'}}>
-                            <strong style={{fontSize: 12}}>{totalData}</strong>
+                            <strong style={{fontSize: 12, paddingRight: 8}}>{totalData}</strong>
                         </p>
                     </div>
                 </div>

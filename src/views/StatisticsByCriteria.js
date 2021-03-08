@@ -13,6 +13,8 @@ const StatisticsByCriteria = (props) => {
     const [updateKey, setUpdateKey] = useState(0)
     const [defaulChart, setDefaultChart] = useState('')
 
+    const idEst = localStorage.getItem('estid')
+
     useEffect(()=> {
         if (usuario?.accessInfo?.access_token) {
             getInfoPollByParticipation()
@@ -28,7 +30,7 @@ const StatisticsByCriteria = (props) => {
         }
     }, [resultsPolls])
 
-    const getInfoPollByParticipation = (id) => {
+    const getInfoPollByParticipation = (id = idEst) => {
         isLoading(true)
         setChartData([])
         electoralProcessService.getFindElectoralProcessInformationById(id).then(res => {

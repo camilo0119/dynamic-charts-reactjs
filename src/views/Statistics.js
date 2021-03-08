@@ -39,7 +39,7 @@ export const Statistics = ({chartData, getData, loading, setDefaultChart, defaul
             await setChartsData(newChartList)
         }
     }
- 
+
     return (
         <div>
             <div className="columns">
@@ -66,7 +66,7 @@ export const Statistics = ({chartData, getData, loading, setDefaultChart, defaul
                 {
                     chartsData.map((chart, i) => (
                         chart.values.length >0 &&
-                            <div className="column is-6" key={i}>
+                            <div className={`${chartsData.length===1 ? 'column is-8 m-2': 'column is-6'}`} key={i}>
                             <div className="columns m-0 card-chart">
                                 <div className="column">
                                     <div>

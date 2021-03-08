@@ -4,10 +4,11 @@ import Swal from 'sweetalert2';
 const serviceAuth = {}
 const path = '/users/login'
 const TOKEN_PAYLOAD_KEY = 'Authorization'
+const URL_BASE = localStorage.getItem('urlBaseLogin')
 
 const defaultData = {
-    username: 'rc1067915911',
-    password: '1067915911'
+    username: localStorage.getItem('name'), //'rc1067915911',
+    password: localStorage.getItem('pwd') //'1067915911'
 }
 
 const headers = {
@@ -17,7 +18,7 @@ const headers = {
 
 serviceAuth.login = async (userForm = defaultData) => {
     let userData
-    await service.post(`http://3.235.249.106:8080${path}`, defaultData, {headers}).then(res => {
+    await service.post(`${URL_BASE}${path}`, defaultData, {headers}).then(res => {
         userData = res.data
         service.interceptors.request.use(config => {
             if (res.data?.accessInfo?.access_token) {
