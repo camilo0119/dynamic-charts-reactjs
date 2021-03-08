@@ -21,36 +21,37 @@ export const TableInfoChart = ({data, colorList}) => {
 
     return (
         <div>
-            <div className="columns is-gapless" style={{fontSize: 12, marginBottom: 0}}>
-                {
-                    dataTable.headTitles.map((item, i) => (
-                        <div className={i === 0 ? 'is-half column' : 'column'} style={{borderBottom: '1px solid #e9e9e9'}}>
-                            <p style={{textAlign: i === 0 ? 'left' : 'center'}}><strong>{item}</strong></p>
-                        </div>
-                    ))
-                }
-            </div>
+                <div className="columns is-gapless is-mobile" style={{fontSize: 12, marginBottom: 0}}>
+                    {
+                        dataTable.headTitles.map((item, i) => (
+                            <div className={i === 0 ? 'column' : 'column is-4'} style={{borderBottom: '1px solid #e9e9e9'}}>
+                                <p style={{textAlign: i === 0 ? 'left' : 'center'}}><strong>{item}</strong></p>
+                            </div>
+                        ))
+                    }
+                </div>
+                <div>
                 {
                     dataTable.values.map((item, i) => (
                         item !== undefined &&
-                        <div className="columns is-gapless" style={{fontSize: 12, marginBottom: 2, borderBottom: '1px dotted #e9e9e9'}}>
-                        <>
-                            <div className="is-half column">
+                        <div className="columns is-gapless is-mobile is-flex" style={{fontSize: 12, marginBottom: 2, borderBottom: '1px dotted #e9e9e9'}}>
+                            <div className="column is-half">
                                 <span data-for='tooltip' className="is-flex ellipsis-text" data-tip={item.labels}>
-                                        <CircleSVG color={colorList?.backgroundColor[i]} border={colorList?.borderColor[i]}/>{item.labels}
+                                    <CircleSVG color={colorList?.backgroundColor[i]} border={colorList?.borderColor[i]}/>
+                                    <p className="ellipsis-text">{item.labels.slice(0, 16)}</p>
                                 </span>
                                 <ReactTooltip id='tooltip' getContent={(dataTip) => `${dataTip}`}/>
                             </div>
-                            <div className="column"><p style={{textAlign: 'center'}}>{item.data}</p></div>
-                        </>
+                            <div className="column is-4"><p style={{textAlign: 'right'}}>{item.data}</p></div>
                         </div>
                     ))
                 }
-                <div className="columns is-gapless" style={{backgroundColor: '#e9e9e9'}}>
+                </div>
+                <div className="columns is-gapless is-mobile" style={{backgroundColor: '#e9e9e9'}}>
                     <div className="column">
                         <strong style={{fontSize: 12}}>Total</strong>
                     </div>
-                    <div className="column">
+                    <div className="column is-4">
                         <p style={{textAlign: 'center'}}>
                             <strong style={{fontSize: 12}}>{totalData}</strong>
                         </p>

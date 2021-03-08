@@ -124,7 +124,7 @@ const StatisticsByCriteria = (props) => {
         }
         const dataPopulation = {
             title: 'Resultado de Votación',
-            headTitles: ['Candidato', 'Total Votos'],
+            headTitles: ['Candidato', 'Votos'],
             values
         }
         setChartData(old => ([

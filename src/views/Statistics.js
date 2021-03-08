@@ -56,7 +56,7 @@ export const Statistics = ({chartData, getData, loading, setDefaultChart, defaul
                                         ))
                                     }
                                 </select>
-                                <button className={`button is-link is-small ml-1 ${loading && 'is-loading'}`} onClick={()=> getData()}>Refrescar Datos</button>
+                                <button className={`button is-link ml-1 ${loading && 'is-loading'}`} onClick={()=> getData()}>Refrescar Datos</button>
                             </div>
                         </div>
                     </div>
@@ -66,21 +66,25 @@ export const Statistics = ({chartData, getData, loading, setDefaultChart, defaul
                 {
                     chartsData.map((chart, i) => (
                         chart.values.length >0 &&
-                            <div className="column is-5 m-1 card-chart" key={i}>
-                            <div>
-                            <p className="is-uppercase card-chart-title">{chart.title}</p>
-                            <hr/>
-                            <div className="columns">
-                                <div className="column is-7">
-                                    <Charts key={updateChild} data={chart.values} colorList={getColorForChart(i)}/>
+                            <div className="column is-6" key={i}>
+                            <div className="columns m-0 card-chart">
+                                <div className="column">
+                                    <div>
+                                        <p className="is-uppercase card-chart-title">{chart.title}</p>
+                                        <hr/>
+                                        <div className="columns">
+                                            <div className="column is-7">
+                                                <Charts key={updateChild} data={chart.values} colorList={getColorForChart(i)}/>
+                                            </div>
+                                            <div className="column" style={{marginTop: 10}}>
+                                                {
+                                                    colorList[i] &&
+                                                    <TableInfoChart key={updateChild} data={chart} colorList={colorList[i]}/>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="column" style={{marginTop: 10}}>
-                                    {
-                                        colorList[i] &&
-                                        <TableInfoChart key={updateChild} data={chart} colorList={colorList[i]}/>
-                                    }
-                                </div>
-                            </div>
                             </div>
                         </div>
                     ))
