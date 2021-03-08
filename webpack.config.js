@@ -18,7 +18,8 @@ module.exports = {
         filename: 'index.bundle.js'
     },
     externals: {
-        'react': 'React'
+        "react": "React",
+        "react-dom": "ReactDOM"
     },
     module: {
         //You rules property would contain all your rules for yoour loaders.

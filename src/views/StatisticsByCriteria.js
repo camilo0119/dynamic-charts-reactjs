@@ -9,6 +9,9 @@ const StatisticsByCriteria = (props) => {
     const {usuario} = useUsuario();
     const [chartData, setChartData] = useState([])
     const [resultsPolls, setResultsPolls] = useState({})
+    const [loading, isLoading] = useState(false)
+    const [updateKey, setUpdateKey] = useState(0)
+    const [defaulChart, setDefaultChart] = useState('')
 
     useEffect(()=> {
         if (usuario?.accessInfo?.access_token) {
@@ -25,15 +28,15 @@ const StatisticsByCriteria = (props) => {
         }
     }, [resultsPolls])
 
-    useEffect(() => {
-        if (chartData.length > 0) {
-        }
-    }, [chartData])
-
     const getInfoPollByParticipation = (id) => {
+        isLoading(true)
+        setChartData([])
         electoralProcessService.getFindElectoralProcessInformationById(id).then(res => {
             setResultsPolls(res.data)
+            isLoading(false)
+            setUpdateKey(old => old+1)
         }).catch((error) => {
+            isLoading(false)
             if (error.response.status === 403) {
                 Swal.fire({
                     title: 'Lo sentimos!',
@@ -66,14 +69,21 @@ const StatisticsByCriteria = (props) => {
             dataPopulation
         ]))
     }
+    
+    const getGender = (gender) => {
+        if (!!gender && gender.toUpperCase() === 'MASCULINO') {
+            return 'Hombres'
+        } else if (!!gender && gender.toUpperCase() === 'FEMENINO') {
+            return 'Mujeres'
+        } return 'No Definido'
+    }
 
     const getElctoralProcessGenderCensus = () => {
-        let headTitles = [] 
         let values = []
         if (resultsPolls?.electoralProcessGenderCensus.length > 0) {
             resultsPolls?.electoralProcessGenderCensus.forEach(p => {
-                values.push({labels: `Participación ${p.gender.toUpperCase() === 'MASCULINO' ? 'Hombres' : 'Mujeres'}`, data: p.voteCount})   
-                values.push({labels: `Abstención ${p.gender.toUpperCase() === 'MASCULINO' ? 'Hombres' : 'Mujeres'}`, data: p.noVote})
+                values.push({labels: `Participación ${getGender(p.gender)}`, data: p.voteCount})   
+                values.push({labels: `Abstención ${getGender(p.gender)}`, data: p.noVote})
             })
         }
         const dataPopulation = {
@@ -91,7 +101,7 @@ const StatisticsByCriteria = (props) => {
         let values = []
         if (resultsPolls?.electoralResultGenderCount && resultsPolls?.electoralResultGenderCount.length > 0) {
             resultsPolls?.electoralResultGenderCount.forEach(p => {
-                values.push({labels: `${p?.gender?.toUpperCase() === 'MASCULINO' ? 'Hombres' : 'Mujeres'}`, data: p.count})
+                values.push({labels: `${getGender(p.gender)}`, data: p.count})
             })
         }
         const dataPopulation = {
@@ -125,7 +135,14 @@ const StatisticsByCriteria = (props) => {
 
     return (
         <div>
-            <Statistics chartData={chartData} key={chartData}/>
+            <Statistics 
+                chartData={chartData}
+                key={updateKey}
+                loading={loading}
+                getData={getInfoPollByParticipation}
+                setDefaultChart={setDefaultChart}
+                defaulChart={defaulChart}
+                />
         </div>
     )
 }

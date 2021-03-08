@@ -33,7 +33,7 @@ export const Charts = ({data, colorList}) => {
         }
       }
 
-    const [chartConfigData, setChartConfigData] = useState(chartConfigInitial)
+    const [chartConfigData] = useState(chartConfigInitial)
 
     return (
         <div>

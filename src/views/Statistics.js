@@ -5,11 +5,15 @@ import { TableInfoChart } from '../components/TableInfoChart'
 
 var colorList = []
 
-export const Statistics = ({chartData}) => {
+export const Statistics = ({chartData, getData, loading, setDefaultChart, defaulChart}) => {
 
     const [chartsData, setChartsData] = useState([])
     const [chartSelected, setChartSelected] = useState('')
     const [updateChild, setUpdateChild] = useState(0)
+
+    useEffect(() => {
+        setChartSelected(defaulChart)
+    }, [])
 
     useEffect(() => {
         setChartsData(chartData)
@@ -18,10 +22,11 @@ export const Statistics = ({chartData}) => {
     useEffect(() => {
         filterChart()
         setUpdateChild(old => old + 1)
+        setDefaultChart(chartSelected)
     }, [chartSelected])
 
     const getColorForChart = (idx) => {
-        const colors = getRandomColor(chartData[idx].values)
+        const colors = getRandomColor(chartsData[idx].values)
         colorList[idx] = colors
         return colors
     }
@@ -42,7 +47,7 @@ export const Statistics = ({chartData}) => {
                     <div className="field">
                         <div className="columns">
                             <div className="column is-flex">
-                                <label className="label is-small" style={{paddingRight: 10}}>Filtrar gráfico por: </label>
+                                <label className="label is-small" style={{paddingRight: 10, paddingTop: 5}}>Filtrar gráfico por: </label>
                                 <select value={chartSelected} onChange={(e) => setChartSelected(e.target.value)}>
                                     <option value='' selected>Todos</option>
                                     {
@@ -51,6 +56,7 @@ export const Statistics = ({chartData}) => {
                                         ))
                                     }
                                 </select>
+                                <button className={`button is-link is-small ml-1 ${loading && 'is-loading'}`} onClick={()=> getData()}>Refrescar Datos</button>
                             </div>
                         </div>
                     </div>
@@ -60,7 +66,7 @@ export const Statistics = ({chartData}) => {
                 {
                     chartsData.map((chart, i) => (
                         chart.values.length >0 &&
-                            <div className="column m-1 is-5 card-chart" key={i}>
+                            <div className="column is-5 m-1 card-chart" key={i}>
                             <div>
                             <p className="is-uppercase card-chart-title">{chart.title}</p>
                             <hr/>

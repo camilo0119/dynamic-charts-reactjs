@@ -1,12 +1,9 @@
 {
   "name": "survey_results",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@reactchartjs/react-chart.js": "^1.0.0-rc.3",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.8.1",
     "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "history": "^5.0.0",
@@ -25,6 +22,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "css-loader": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^0.23.1",
@@ -38,13 +36,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "npm run build & firebase deploy",
-    "build-production": "webpack --mode production",
+    "build-production": "webpack --config=webpack.config.js --env.production=true",
     "build-development": "webpack-dev-server --host 0.0.0.0 --mode development --open"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {

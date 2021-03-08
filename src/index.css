@@ -38,3 +38,7 @@ code {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+hr {
+  margin: 7px -12px 1px -13px !important;
+}

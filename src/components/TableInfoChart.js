@@ -4,12 +4,11 @@ import { CircleSVG } from '../commons/CircleSVG'
 
 export const TableInfoChart = ({data, colorList}) => {
 
-    const [dataTable, setDataTable] = useState(data)
+    const [dataTable] = useState(data)
     const [totalData, setTotalData] = useState(0)
 
     useEffect(() => {
         getTotal()
-        console.log('colorList', colorList)
     }, [])
 
     const getTotal = () => {
@@ -22,7 +21,7 @@ export const TableInfoChart = ({data, colorList}) => {
 
     return (
         <div>
-            <div className="columns is-gapless" style={{fontSize: 12}}>
+            <div className="columns is-gapless" style={{fontSize: 12, marginBottom: 0}}>
                 {
                     dataTable.headTitles.map((item, i) => (
                         <div className={i === 0 ? 'is-half column' : 'column'} style={{borderBottom: '1px solid #e9e9e9'}}>
