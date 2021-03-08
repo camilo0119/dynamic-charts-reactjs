@@ -16,14 +16,30 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-tooltip": "^4.2.15",
+    "sweetalert2": "^10.15.5",
+    "sweetalert2-react-content": "^3.3.1",
     "web-vitals": "^1.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build & firebase deploy"
+    "deploy": "npm run build & firebase deploy",
+    "build-production": "webpack --mode production",
+    "build-development": "webpack-dev-server --host 0.0.0.0 --mode development --open"
   },
   "eslintConfig": {
     "extends": [

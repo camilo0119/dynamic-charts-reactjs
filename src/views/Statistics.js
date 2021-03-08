@@ -21,7 +21,7 @@ export const Statistics = ({chartData}) => {
     }, [chartSelected])
 
     const getColorForChart = (idx) => {
-        const colors = getRandomColor(chartData)
+        const colors = getRandomColor(chartData[idx].values)
         colorList[idx] = colors
         return colors
     }
@@ -47,7 +47,7 @@ export const Statistics = ({chartData}) => {
                                     <option value='' selected>Todos</option>
                                     {
                                         chartData.map((item, i) => (
-                                            <option key={i} value={item.title}>{item.title}</option>
+                                            item.values.length > 0 && <option key={i} value={item.title}>{item.title}</option>
                                         ))
                                     }
                                 </select>
@@ -59,7 +59,9 @@ export const Statistics = ({chartData}) => {
             <div className="columns is-multiline">
                 {
                     chartsData.map((chart, i) => (
-                        <div className="column is-5 card-chart" key={i}>
+                        chart.values.length >0 &&
+                            <div className="column m-1 is-5 card-chart" key={i}>
+                            <div>
                             <p className="is-uppercase card-chart-title">{chart.title}</p>
                             <hr/>
                             <div className="columns">
@@ -72,6 +74,7 @@ export const Statistics = ({chartData}) => {
                                         <TableInfoChart key={updateChild} data={chart} colorList={colorList[i]}/>
                                     }
                                 </div>
+                            </div>
                             </div>
                         </div>
                     ))

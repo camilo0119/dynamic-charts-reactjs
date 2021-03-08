@@ -1,5 +1,6 @@
 import StatisticsByCriteria from "./views/StatisticsByCriteria";
-import {UserProvider, useUsuario}  from './context/ususario-context';
+import {UserProvider}  from './context/ususario-context';
+import React from 'react';
 
 function App() {
 

@@ -9,16 +9,13 @@ export const TableInfoChart = ({data, colorList}) => {
 
     useEffect(() => {
         getTotal()
+        console.log('colorList', colorList)
     }, [])
 
     const getTotal = () => {
         let sum = 0
         dataTable.values.forEach(val => {
-            if (typeof val.data === 'number') {
-                sum = sum + val.data 
-            } else {
-                sum = val.data
-            }
+            sum = Number(sum) + Number(val.data)
         })
         setTotalData(sum)
     }
@@ -36,6 +33,7 @@ export const TableInfoChart = ({data, colorList}) => {
             </div>
                 {
                     dataTable.values.map((item, i) => (
+                        item !== undefined &&
                         <div className="columns is-gapless" style={{fontSize: 12, marginBottom: 2, borderBottom: '1px dotted #e9e9e9'}}>
                         <>
                             <div className="is-half column">

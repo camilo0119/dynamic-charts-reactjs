@@ -8,8 +8,8 @@ export const Charts = ({data, colorList}) => {
         datasets: [
             {
                 data: data.map(p => p.data),
-                backgroundColor: colorList.backgroundColor,
-                borderColor: colorList.borderColor,
+                backgroundColor: colorList?.backgroundColor,
+                borderColor: colorList?.borderColor,
                 borderWidth: 1,
             }
         ]

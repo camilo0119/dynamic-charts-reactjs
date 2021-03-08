@@ -1,12 +1,13 @@
-import service from "../auth/FetchInterceptor"
+import service from '../auth/FetchInterceptor';
+import Swal from 'sweetalert2';
 
 const serviceAuth = {}
 const path = '/users/login'
 const TOKEN_PAYLOAD_KEY = 'Authorization'
 
 const defaultData = {
-    username: 'ti1067912212',
-    password: '112233'
+    username: 'rc1067915911',
+    password: '1067915911'
 }
 
 const headers = {
@@ -23,6 +24,13 @@ serviceAuth.login = async (userForm = defaultData) => {
                 config.headers[TOKEN_PAYLOAD_KEY] = `Bearer ${res.data.accessInfo.access_token}`
             }
             return config
+        })
+    }).catch((error)=> {
+        Swal.fire({
+            title: 'Lo sentimos!',
+            text: `${error.response.data?.message}`,
+            icon: 'error',
+            confirmButtonText: 'OK'
         })
     })
     return userData

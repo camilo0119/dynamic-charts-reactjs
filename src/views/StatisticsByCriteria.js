@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2';
 import { useUsuario } from '../context/ususario-context';
 import electoralProcessService from '../services/electroralProcesService'
 import { Statistics } from './Statistics'
@@ -10,7 +11,9 @@ const StatisticsByCriteria = (props) => {
     const [resultsPolls, setResultsPolls] = useState({})
 
     useEffect(()=> {
-        getInfoPollByParticipation()
+        if (usuario?.accessInfo?.access_token) {
+            getInfoPollByParticipation()
+        }
     }, [usuario])
 
     useEffect(() => {
@@ -30,6 +33,22 @@ const StatisticsByCriteria = (props) => {
     const getInfoPollByParticipation = (id) => {
         electoralProcessService.getFindElectoralProcessInformationById(id).then(res => {
             setResultsPolls(res.data)
+        }).catch((error) => {
+            if (error.response.status === 403) {
+                Swal.fire({
+                    title: 'Lo sentimos!',
+                    text: `Error de autenticación, no se pudo recuperar la información. ${error.response.data?.message}`,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+            } else {
+                Swal.fire({
+                    title: 'Lo sentimos!',
+                    text: `${error.response.data?.message}`,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+            }
         })
     }
 
@@ -70,7 +89,7 @@ const StatisticsByCriteria = (props) => {
 
     const getElectoralResultGenderCount = () => {
         let values = []
-        if (resultsPolls?.electoralResultGenderCount.length > 0) {
+        if (resultsPolls?.electoralResultGenderCount && resultsPolls?.electoralResultGenderCount.length > 0) {
             resultsPolls?.electoralResultGenderCount.forEach(p => {
                 values.push({labels: `${p?.gender?.toUpperCase() === 'MASCULINO' ? 'Hombres' : 'Mujeres'}`, data: p.count})
             })
