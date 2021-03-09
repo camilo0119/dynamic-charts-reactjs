@@ -24,6 +24,8 @@ const StatisticsByCriteria = (props) => {
     useEffect(() => {
         if (!!resultsPolls?.populationCountDTO) {
             getPopulation()
+            getElctoralProcessForGenderCensus('MASCULINO')
+            getElctoralProcessForGenderCensus('FEMENINO')
             getElctoralProcessGenderCensus()
             getElectoralResultGenderCount()
             getElectoralResultCount()
@@ -59,7 +61,7 @@ const StatisticsByCriteria = (props) => {
 
     const getPopulation = () => {
         const dataPopulation = {
-            title: 'Reporte de Participación',
+            title: 'Reporte de Participación estudiantil',
             headTitles: ['Tipo', 'Cantidad'],
             values: [
                 {labels: 'Participación', data: resultsPolls?.populationCountDTO?.votes},
@@ -80,6 +82,27 @@ const StatisticsByCriteria = (props) => {
         } return 'No Definido'
     }
 
+    const getElctoralProcessForGenderCensus = (gender) => {
+        let values = []
+        if (resultsPolls?.electoralProcessGenderCensus.length > 0) {
+            resultsPolls?.electoralProcessGenderCensus.forEach(p => {
+                if (gender.toUpperCase() === p.gender.toUpperCase()) {
+                    values.push({labels: `Participación ${getGender(p.gender)}`, data: p.voteCount})   
+                    values.push({labels: `Abstención ${getGender(p.gender)}`, data: p.noVote})
+                }
+            })
+        }
+        const dataPopulation = {
+            title: `Reporte participación electores ${gender}`,
+            headTitles: ['Género', 'Total'],
+            values
+        }
+        setChartData(old => ([
+            ...old,
+            dataPopulation
+        ]))
+    }
+
     const getElctoralProcessGenderCensus = () => {
         let values = []
         if (resultsPolls?.electoralProcessGenderCensus.length > 0) {
@@ -89,7 +112,7 @@ const StatisticsByCriteria = (props) => {
             })
         }
         const dataPopulation = {
-            title: 'Abstinecia por Género',
+            title: `Reporte participación por genero electores`,
             headTitles: ['Género', 'Total'],
             values
         }

@@ -13,9 +13,19 @@ export const TableInfoChart = ({data, colorList}) => {
 
     const getTotal = () => {
         let sum = 0
+        let participation = null
+        let abstention = null
         dataTable.values.forEach(val => {
+            if (val.labels === 'Participación' && dataTable.values.length === 2) {
+                abstention = Number(val.data)
+            } else if (val.labels === 'Abstención' && dataTable.values.length === 2) {
+                participation = Number(val.data)
+            }
             sum = Number(sum) + Number(val.data)
         })
+        if (abstention !== null || participation !== null) {
+            sum = participation - abstention
+        }
         setTotalData(sum)
     }
 

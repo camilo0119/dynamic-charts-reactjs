@@ -30,7 +30,7 @@ export const Charts = ({data, colorList}) => {
               return data.labels[tooltipItem[0].index];
             }
           }
-        }
+        },
       }
 
     const [chartConfigData] = useState(chartConfigInitial)

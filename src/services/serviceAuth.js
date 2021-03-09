@@ -7,13 +7,13 @@ const TOKEN_PAYLOAD_KEY = 'Authorization'
 const URL_BASE = localStorage.getItem('urlBaseLogin')
 
 const defaultData = {
-    username: localStorage.getItem('name'), //'rc1067915911',
-    password: localStorage.getItem('pwd') //'1067915911'
+    username: localStorage.getItem('name'),
+    password: localStorage.getItem('pwd')
 }
 
 const headers = {
     'Content-Type': 'application/json',
-    'UUID-Device': 'eeeeeee'
+    'UUID-Device': localStorage.getItem('UUID-Device') ?? 'COLEVA'
 }
 
 serviceAuth.login = async (userForm = defaultData) => {
