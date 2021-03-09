@@ -23,12 +23,12 @@ const StatisticsByCriteria = (props) => {
 
     useEffect(() => {
         if (!!resultsPolls?.populationCountDTO) {
+            getElectoralResultCount()
             getPopulation()
+            getElctoralProcessGenderCensus()
             getElctoralProcessForGenderCensus('MASCULINO')
             getElctoralProcessForGenderCensus('FEMENINO')
-            getElctoralProcessGenderCensus()
             getElectoralResultGenderCount()
-            getElectoralResultCount()
         }
     }, [resultsPolls])
 
