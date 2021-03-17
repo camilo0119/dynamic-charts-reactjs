@@ -18,7 +18,7 @@ const headers = {
 
 serviceAuth.login = async (userForm = defaultData) => {
     let userData
-    await service.post(`${URL_BASE}${path}`, defaultData, {headers}).then(res => {
+    await service.post(`${URL_BASE}${path}`, userForm, {headers}).then(res => {
         userData = res.data
         service.interceptors.request.use(config => {
             if (res.data?.accessInfo?.access_token) {
