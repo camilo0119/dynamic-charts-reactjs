@@ -1,8 +1,6 @@
 import StatisticsByCriteria from "./views/StatisticsByCriteria";
 import {UserProvider}  from './context/ususario-context';
-import React, {useEffect} from 'react';
-
-var style = null
+import React from 'react';
 
 function App() {
 
