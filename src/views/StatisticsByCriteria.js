@@ -16,14 +16,16 @@ const StatisticsByCriteria = (props) => {
     const idEst = localStorage.getItem('estid')
 
     useEffect(()=> {
-        if (usuario?.accessInfo?.access_token) {
+        if (usuario?.accessInfo?.access_token && idEst) {
             getInfoPollByParticipation()
         }
     }, [usuario])
 
     useEffect(() => {
         if (!!resultsPolls?.populationCountDTO) {
-            getElectoralResultCount()
+            if (resultsPolls.status === 'FINALIZADO') {
+                getElectoralResultCount()
+            }
             getPopulation()
             getElctoralProcessGenderCensus()
             getElctoralProcessForGenderCensus('MASCULINO')

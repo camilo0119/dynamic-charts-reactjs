@@ -7,14 +7,17 @@ export const UserProvider = (props) => {
 
     const [usuario, setUsuario] = useState({})
 
+    const chartSelectedID = localStorage.getItem('estid')
+
     useEffect(()=> {
-        getUserInfo()
+        if (chartSelectedID) {
+            getUserInfo()
+        }
     }, [])
 
     const getUserInfo = async () => {
         await serviceAuth.login().then(res => {
             setUsuario(res)
-
         })
     }
 

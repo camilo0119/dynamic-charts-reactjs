@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './styles/styles.scss';
 import App from './App';
 import presetDataEnvironment from './utils/presetData';
 window.React = React;

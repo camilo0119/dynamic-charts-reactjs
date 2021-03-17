@@ -47,16 +47,18 @@ export const Statistics = ({chartData, getData, loading, setDefaultChart, defaul
                     <div className="field">
                         <div className="columns">
                             <div className="column is-flex">
-                                <label className="label is-small" style={{paddingRight: 10, paddingTop: 5}}>Filtrar gráfico por: </label>
-                                <select value={chartSelected} onChange={(e) => setChartSelected(e.target.value)}>
-                                    <option value='' selected>Todos</option>
-                                    {
-                                        chartData.map((item, i) => (
-                                            item.values.length > 0 && <option key={i} value={item.title}>{item.title}</option>
-                                        ))
-                                    }
-                                </select>
-                                <button className={`button is-link ml-1 ${loading && 'is-loading'}`} onClick={()=> getData()}>Refrescar Datos</button>
+                                    <label className="label" style={{paddingRight: 10, paddingTop: 8, fontWeight: 'bold', fontSize: 12}}>Filtrar gráfico por: </label>
+                                    <div className="select is-normal">
+                                        <select value={chartSelected} onChange={(e) => setChartSelected(e.target.value)}>
+                                            <option value='' selected>Todos</option>
+                                            {
+                                                chartData.map((item, i) => (
+                                                    item.values.length > 0 && <option key={i} value={item.title}>{item.title}</option>
+                                                ))
+                                            }
+                                        </select>
+                                    </div>
+                                    <button className={`button is-link ml-1 is-small ${loading && 'is-loading'}`} onClick={()=> getData()}>Refrescar Datos</button>
                             </div>
                         </div>
                     </div>
